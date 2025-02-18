@@ -20,53 +20,79 @@ const Home = () => {
     }));
   };
 
+  const getEmotionIcon = (emotion) => {
+    switch (emotion.toLowerCase()) {
+      case 'happy': return '😊';
+      case 'sad': return '😢';
+      case 'angry': return '😠';
+      case 'fear': return '😨';
+      case 'neutral': return '😐';
+      default: return '🤔';
+    }
+  };
+
+  const getEmotionColor = (emotion) => {
+    switch (emotion.toLowerCase()) {
+      case 'happy': return '#4ade80'; // green
+      case 'sad': return '#60a5fa'; // blue
+      case 'angry': return '#ef4444'; // red
+      case 'fear': return '#a855f7'; // purple
+      case 'neutral': return '#6366f1'; // indigo
+      default: return '#6366f1';
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-  
+
     try {
-      const encodedText = encodeURIComponent(btoa(formData.message))
+      const encodedText = encodeURIComponent(btoa(String.fromCharCode(...new TextEncoder().encode(formData.message))));
       const response = await fetch(`http://localhost:9959/?text=${encodedText}`);
-  
-      // เช็คว่าคำขอสำเร็จหรือไม่
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-  
-      // ตรวจสอบว่ามี result จริงหรือไม่
-      if (!data.result) {
-        throw new Error("No emotion detected in response.");
-      }
-  
+      const emotionIcon = getEmotionIcon(data.result);
+      const emotionColor = getEmotionColor(data.result);
+
       setEmotion(data.result);
-  
-      // แสดง Swal.fire 
+
       Swal.fire({
-        title: "ตรวจพบอารมณ์!",
-        text: `อารมณ์ของคุณคือ: ${data.result}`,
-        icon: "success",
-        confirmButtonText: "ตกลง",
-        confirmButtonColor: "#6366f1",
+        title: `${emotionIcon} ตรวจพบอารมณ์!`,
+        html: `
+          <div style="margin-top: 1rem;">
+            <p style="font-size: 1.1rem; color: #666;">ข้อความของคุณ:</p>
+            <p style="margin: 0.5rem 0; padding: 0.75rem; background: #f8f9fa; border-radius: 0.5rem; color: #333;">"${formData.message}"</p>
+            <p style="font-size: 1.25rem; margin-top: 1rem; color: ${emotionColor};">
+              อารมณ์ที่ตรวจพบคือ: <strong>${data.result}</strong>
+            </p>
+          </div>
+        `,
+        icon: 'success',
+        confirmButtonText: 'ตกลง',
+        confirmButtonColor: '#6366f1',
+        showCloseButton: true,
+        customClass: {
+          popup: 'animated fadeInDown'
+        }
       });
-  
+
     } catch (error) {
-      console.error("Error:", error);
-  
+      console.error('Error:', error);
       Swal.fire({
-        title: "เกิดข้อผิดพลาด!",
-        text: "ไม่สามารถวิเคราะห์อารมณ์ได้ กรุณาลองใหม่อีกครั้ง",
-        icon: "error",
-        confirmButtonText: "ตกลง",
-        confirmButtonColor: "#6366f1",
+        title: '❌ เกิดข้อผิดพลาด!',
+        text: 'ไม่สามารถวิเคราะห์อารมณ์ได้',
+        icon: 'error',
+        confirmButtonText: 'ลองใหม่',
+        confirmButtonColor: '#ef4444'
       });
-  
     } finally {
       setIsSubmitting(false);
     }
   };
-  
 
   useEffect(() => {
     AOS.init({
@@ -76,19 +102,22 @@ const Home = () => {
 
   return (
     <>
-      <div className="text-center lg:mt-[5%] mt-10 mb-2 sm:px-0 px-[5%]">
-
-      </div>
+      <div className="pt-8 ">
+        <div className="mt-20 mb-20 text-center pb-10" data-aos="fade-up" data-aos-duration="800">
+          <h2 className="inline-block text-4xl md:text-5xl font-bold text-center mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
+            {/* Ai Emotion Detection */}
+          </h2>
+        </div>
 
       <div
-        className="h-auto py-10 flex items-center justify-center px-[5%] md:px-0"
+        className="flex justify-center min-h-9/10 bg-cover bg-center bg-no-repeat "
         id="Contact"
       >
-        <div className="container px-[1%] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-[45%_55%] 2xl:grid-cols-[35%_65%] gap-12">
+        <div className="px-[1%] lg:grid-cols-[45%_55%] 2xl:grid-cols-[35%_65%] gap-12 bg-gradient-to-br">
           <div
             data-aos="fade-right"
             data-aos-duration="1200"
-            className="bg-white/5 backdrop-blur-xl rounded-3xl shadow-2xl p-5 py-10 sm:p-10 transform transition-all duration-300 hover:shadow-[#6366f1]/10"
+            className=" bg-white/5 backdrop-blur-xl rounded-3xl shadow-2xl p-5 py-10 sm:p-10 transform transition-all duration-300 hover:shadow-[#a955f767] "
           >
             <div className="flex justify-between items-start mb-8">
               <div>
@@ -99,7 +128,6 @@ const Home = () => {
                   Have something to discuss? Send me a message and let's talk.
                 </p>
               </div>
-
             </div>
 
             <form
@@ -139,6 +167,7 @@ const Home = () => {
             </form>
           </div>
         </div>
+      </div>
       </div>
     </>
   );
