@@ -48,7 +48,7 @@ const Home = () => {
 
     try {
       const encodedText = encodeURIComponent(btoa(String.fromCharCode(...new TextEncoder().encode(formData.message))));
-      const response = await fetch(`http://localhost:9959/?text=${encodedText}`);
+      const response = await fetch(`https://api-emotion-detection.hoshizora.online/?text=${encodedText}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
