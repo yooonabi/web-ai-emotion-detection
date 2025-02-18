@@ -1,17 +1,20 @@
 "use client";
+// Import libraries ที่จำเป็น
 import React, { useState, useEffect } from "react";
-import { MessageSquare, Send } from "lucide-react";
-import Swal from "sweetalert2";
-import AOS from "aos";
+import { MessageSquare, Send } from "lucide-react"; // Import icons
+import Swal from "sweetalert2"; // สำหรับแสดง popup แจ้งเตือน
+import AOS from "aos"; // สำหรับ scroll animation
 import "aos/dist/aos.css";
 
 const Home = () => {
+  // State สำหรับเก็บข้อความและสถานะต่างๆ
   const [formData, setFormData] = useState({
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [emotion, setEmotion] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false); // สถานะการส่งข้อมูล
+  const [emotion, setEmotion] = useState(""); // เก็บอารมณ์ที่ได้จาก API
 
+  // จัดการการเปลี่ยนแปลงข้อความใน textarea
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -20,6 +23,7 @@ const Home = () => {
     }));
   };
 
+  // ฟังก์ชันสำหรับเลือก emoji ตามอารมณ์
   const getEmotionIcon = (emotion) => {
     switch (emotion.toLowerCase()) {
       case 'happy': return '😊';
@@ -31,35 +35,41 @@ const Home = () => {
     }
   };
 
+  // ฟังก์ชันสำหรับเลือกสีตามอารมณ์
   const getEmotionColor = (emotion) => {
     switch (emotion.toLowerCase()) {
-      case 'happy': return '#4ade80'; // green
-      case 'sad': return '#60a5fa'; // blue
-      case 'angry': return '#ef4444'; // red
-      case 'fear': return '#a855f7'; // purple
-      case 'neutral': return '#6366f1'; // indigo
+      case 'happy': return '#4ade80'; // สีเขียว - ความสุข
+      case 'sad': return '#60a5fa'; // สีฟ้า - ความเศร้า
+      case 'angry': return '#ef4444'; // สีแดง - ความโกรธ
+      case 'fear': return '#a855f7'; // สีม่วง - ความกลัว
+      case 'neutral': return '#6366f1'; // สีน้ำเงิน - เป็นกลาง
       default: return '#6366f1';
     }
   };
 
+  // ฟังก์ชันจัดการการส่งข้อมูล
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
+      // เข้ารหัสข้อความก่อนส่งไป API
       const encodedText = encodeURIComponent(btoa(String.fromCharCode(...new TextEncoder().encode(formData.message))));
+      // เรียก API เพื่อวิเคราะห์อารมณ์
       const response = await fetch(`https://api-emotion-detection.hoshizora.online/?text=${encodedText}`);
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+      // แปลงข้อมูลที่ได้จาก API
       const data = await response.json();
       const emotionIcon = getEmotionIcon(data.result);
       const emotionColor = getEmotionColor(data.result);
 
       setEmotion(data.result);
 
+      // แสดง popup ผลการวิเคราะห์
       Swal.fire({
         title: `${emotionIcon} ตรวจพบอารมณ์!`,
         html: `
@@ -81,6 +91,7 @@ const Home = () => {
       });
 
     } catch (error) {
+      // จัดการกรณีเกิดข้อผิดพลาด
       console.error('Error:', error);
       Swal.fire({
         title: '❌ เกิดข้อผิดพลาด!',
@@ -90,16 +101,18 @@ const Home = () => {
         confirmButtonColor: '#ef4444'
       });
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
     }
   };
 
+  // Initialize AOS animation library
   useEffect(() => {
     AOS.init({
       once: false,
     });
   }, []);
 
+  // ส่วนแสดงผล UI
   return (
     <>
       <div className="pt-8 ">
