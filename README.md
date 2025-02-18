@@ -1,36 +1,89 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎭 ระบบวิเคราะห์อารมณ์จากข้อความด้วย AI
 
-## Getting Started
+เว็บแอปพลิเคชันที่พัฒนาด้วย Next.js สามารถวิเคราะห์อารมณ์จากข้อความที่ผู้ใช้ป้อนเข้ามาได้แบบเรียลไทม์ ด้วยการใช้โมเดล Machine Learning
 
-First, run the development server:
+## ✨ คุณสมบัติหลัก
 
+- วิเคราะห์อารมณ์จากข้อความแบบเรียลไทม์
+- หน้าเว็บสวยงามด้วย Animated Gradient Background
+- รองรับการแสดงผลบนทุกขนาดหน้าจอด้วย Tailwind CSS
+- เอฟเฟกต์การเลื่อนที่นุ่มนวลด้วย AOS (Animate On Scroll)
+- ดีไซน์สมัยใหม่ด้วยเอฟเฟกต์ Glassmorphism
+- แสดงผลอารมณ์พร้อม Emoji และสีที่เข้ากับอารมณ์นั้นๆ
+
+## 🎯 อารมณ์ที่ระบบสามารถวิเคราะห์ได้
+
+- 😊 มีความสุข (Happy)  
+- 😢 เศร้า (Sad)
+- 😠 โกรธ (Angry)
+- 😨 กลัว (Fear)
+- 😐 เป็นกลาง (Neutral)
+
+## 🛠 เทคโนโลยีที่ใช้
+
+- **Frontend**: Next.js 15.1, React 19
+- **การจัดการ Style**: Tailwind CSS
+- **UI Components**: 
+  - Lucide React สำหรับไอคอน
+  - SweetAlert2 สำหรับการแจ้งเตือน
+  - AOS สำหรับ Animation
+- **เครื่องมือพัฒนา**:
+  - TypeScript
+  - ESLint
+  - PostCSS
+
+## 🚀 การติดตั้งและใช้งาน
+
+1. Clone โปรเจค:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd web-ai-emotion-detection
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. ติดตั้ง Dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. รัน Development Server:
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. รัน Backend Server สำหรับวิเคราะห์อารมณ์ (ต้องรันที่พอร์ต 9959)
 
-## Learn More
+5. เปิดเว็บไซต์ที่ [http://localhost:3000](http://localhost:3000)
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 โครงสร้างโปรเจค
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/                # โฟลเดอร์หลักของ Next.js
+├── components/         # React Components
+│   ├── Background.jsx  # พื้นหลังแบบเคลื่อนไหว
+│   └── navbar.jsx      # เมนูนำทาง
+├── pages/             # หน้าต่างๆ
+│   └── Home.jsx       # หน้าหลักสำหรับวิเคราะห์อารมณ์
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 💻 คำสั่งที่ใช้ในการพัฒนา
 
-## Deploy on Vercel
+```bash
+# รันในโหมดพัฒนา
+npm run dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Build สำหรับ Production
+npm run build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# รันเซิร์ฟเวอร์ Production
+npm run start
+
+# ตรวจสอบโค้ดด้วย Linter
+npm run lint
+```
+
+## ⚙️ การตั้งค่าระบบ
+
+ต้องมีการติดตั้ง:
+- Node.js เวอร์ชั่น 18 ขึ้นไป
+- Backend Server ที่รันบน `http://localhost:9959`
