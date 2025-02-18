@@ -49,10 +49,7 @@ npm install
 ```bash
 npm run dev
 ```
-
-4. รัน Backend Server สำหรับวิเคราะห์อารมณ์ (ต้องรันที่พอร์ต 9959)
-
-5. เปิดเว็บไซต์ที่ [http://localhost:3000](http://localhost:3000)
+4. เปิดเว็บไซต์ที่ http://localhost:3000
 
 ## 📁 โครงสร้างโปรเจค
 
@@ -86,4 +83,6 @@ npm run lint
 
 ต้องมีการติดตั้ง:
 - Node.js เวอร์ชั่น 18 ขึ้นไป
-- Backend Server ที่รันบน `http://localhost:9959`
+- Github  https://github.com/GkungZ01/ai-emotion-detection-in-text
+- Backend Server API `https://api-emotion-detection.hoshizora.online/?text=`
+
