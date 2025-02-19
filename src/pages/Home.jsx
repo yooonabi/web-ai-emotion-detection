@@ -26,24 +26,36 @@ const Home = () => {
   // ฟังก์ชันสำหรับเลือก emoji ตามอารมณ์
   const getEmotionIcon = (emotion) => {
     switch (emotion.toLowerCase()) {
-      case 'happy': return '😊';
-      case 'sad': return '😢';
-      case 'angry': return '😠';
-      case 'fear': return '😨';
-      case 'neutral': return '😐';
-      default: return '🤔';
+      case "happy":
+        return "😊";
+      case "sad":
+        return "😢";
+      case "angry":
+        return "😠";
+      case "fear":
+        return "😨";
+      case "neutral":
+        return "😐";
+      default:
+        return "🤔";
     }
   };
 
   // ฟังก์ชันสำหรับเลือกสีตามอารมณ์
   const getEmotionColor = (emotion) => {
     switch (emotion.toLowerCase()) {
-      case 'happy': return '#4ade80'; // สีเขียว - ความสุข
-      case 'sad': return '#60a5fa'; // สีฟ้า - ความเศร้า
-      case 'angry': return '#ef4444'; // สีแดง - ความโกรธ
-      case 'fear': return '#a855f7'; // สีม่วง - ความกลัว
-      case 'neutral': return '#6366f1'; // สีน้ำเงิน - เป็นกลาง
-      default: return '#6366f1';
+      case "happy":
+        return "#4ade80"; // สีเขียว - ความสุข
+      case "sad":
+        return "#60a5fa"; // สีฟ้า - ความเศร้า
+      case "angry":
+        return "#ef4444"; // สีแดง - ความโกรธ
+      case "fear":
+        return "#a855f7"; // สีม่วง - ความกลัว
+      case "neutral":
+        return "#6366f1"; // สีน้ำเงิน - เป็นกลาง
+      default:
+        return "#6366f1";
     }
   };
 
@@ -81,24 +93,23 @@ const Home = () => {
             </p>
           </div>
         `,
-        icon: 'success',
-        confirmButtonText: 'ตกลง',
-        confirmButtonColor: '#6366f1',
+        icon: "success",
+        confirmButtonText: "ตกลง",
+        confirmButtonColor: "#6366f1",
         showCloseButton: true,
         customClass: {
-          popup: 'animated fadeInDown'
-        }
+          popup: "animated fadeInDown",
+        },
       });
-
     } catch (error) {
       // จัดการกรณีเกิดข้อผิดพลาด
-      console.error('Error:', error);
+      console.error("Error:", error);
       Swal.fire({
-        title: '❌ เกิดข้อผิดพลาด!',
-        text: 'ไม่สามารถวิเคราะห์อารมณ์ได้',
-        icon: 'error',
-        confirmButtonText: 'ลองใหม่',
-        confirmButtonColor: '#ef4444'
+        title: "❌ เกิดข้อผิดพลาด!",
+        text: "ไม่สามารถวิเคราะห์อารมณ์ได้",
+        icon: "error",
+        confirmButtonText: "ลองใหม่",
+        confirmButtonColor: "#ef4444",
       });
     } finally {
       setIsSubmitting(false); // รีเซ็ตสถานะการส่งข้อมูล
@@ -115,17 +126,7 @@ const Home = () => {
   // ส่วนแสดงผล UI
   return (
     <>
-      <div className="pt-8 ">
-        <div className="mt-20 mb-20 text-center pb-10" data-aos="fade-up" data-aos-duration="800">
-          <h2 className="inline-block text-4xl md:text-5xl font-bold text-center mx-auto text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
-            {/* Ai Emotion Detection */}
-          </h2>
-        </div>
-
-      <div
-        className="flex justify-center min-h-9/10 bg-cover bg-center bg-no-repeat "
-        id="Contact"
-      >
+      <div className="flex justify-center items-center min-h-9/10 bg-cover bg-center bg-no-repeat h-screen w-screen" id="Contact">
         <div className="px-[1%] lg:grid-cols-[45%_55%] 2xl:grid-cols-[35%_65%] gap-12 bg-gradient-to-br">
           <div
             data-aos="fade-right"
@@ -137,25 +138,16 @@ const Home = () => {
                 <h2 className="text-4xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-[#6366f1] to-[#a855f7]">
                   How do you feel now?
                 </h2>
-                <p className="text-gray-400">
-                  Have something to discuss? Send me a message and let's talk.
-                </p>
+                <p className="text-gray-400">Have something to discuss? Send me a message and let's talk.</p>
               </div>
             </div>
 
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-6"
-            >
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* FormSubmit Configuration */}
               <input type="hidden" name="_template" value="table" />
               <input type="hidden" name="_captcha" value="false" />
 
-              <div
-                data-aos="fade-up"
-                data-aos-delay="300"
-                className="relative group"
-              >
+              <div data-aos="fade-up" data-aos-delay="300" className="relative group">
                 <MessageSquare className="absolute left-4 top-4 w-5 h-5 text-gray-400 group-focus-within:text-[#6366f1] transition-colors" />
                 <textarea
                   name="message"
@@ -175,12 +167,11 @@ const Home = () => {
                 className="w-full bg-gradient-to-r from-[#6366f1] to-[#a855f7] text-white py-4 rounded-xl font-semibold transition-all duration-300 hover:scale-[1.02] hover:shadow-lg hover:shadow-[#6366f1]/20 active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 <Send className="w-5 h-5" />
-                {isSubmitting ? 'Sending...' : 'Send Message'}
+                {isSubmitting ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>
         </div>
-      </div>
       </div>
     </>
   );
